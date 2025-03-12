@@ -1,0 +1,209 @@
+git init => git uchun repository yaratish uchun ishlatiladi
+git add . => git o'zgarishlarni gitga qo'shish uchun ishlatiladi
+git commit -m "Commentariya" =>  gitga qo'shilgan o'zgarishlarga comentariya qo'yish uchun ishlatiladi
+git branch -M main => main branchiga o'tish uchun ,yoki yangi branch yaratish uchun ishlatiladi
+git remote add origin <git url>=> git repositoryni githubga qo'shish uchun ishlatiladi
+git push -u origin main =>local maindagini githubdagi mainga o'tkazish uchun ishlatiladi
+https://core.telegram.org/ =>telegram yaratish uchun api
+https://core.telegram.org/bots/api => telegram bot api documentation
+https://api.telegram.org/bot<token>/METHOD_NAME => orqali botni boshqarish
+
+
+https://api.telegram.org/bot7757211298:AAHbIGZsEzddv3UGqywogdghF_QbW4neZUc/getMe=>bot haqida malumot beradi
+
+        ok	true
+        result
+        id	7757211298
+        is_bot	true
+        first_name	"ozbekona_cisco"
+        username	"ozbekona_cisco_bot"
+        can_join_groups	true
+        can_read_all_group_messages	false
+        supports_inline_queries	false
+        can_connect_to_business	false
+        has_main_web_app	false
+https://api.telegram.org/bot7757211298:AAHbIGZsEzddv3UGqywogdghF_QbW4neZUc/getUpdates
+            ^
+            ^
+            Botni holati haqida habar beradi yuborgani haqida
+
+https://api.telegram.org/bot7757211298:AAHbIGZsEzddv3UGqywogdghF_QbW4neZUc/sendMessage?chat_id=5441726257&text=Salom=>bot orqali xabar yuborish
+
+available methods
+sendMessage
+
+Use this method to send text messages. On success, the sent Message is returned.
+Parameter 	Type 	Required 	Description
+business_connection_id 	String 	Optional 	Unique identifier of the business connection on behalf of which the message will be sent
+chat_id 	Integer or String 	Yes 	Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+message_thread_id 	Integer 	Optional 	Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+text 	String 	Yes 	Text of the message to be sent, 1-4096 characters after entities parsing
+parse_mode 	String 	Optional 	Mode for parsing entities in the message text. See formatting options for more details.
+entities 	Array of MessageEntity 	Optional 	A JSON-serialized list of special entities that appear in message text, which can be specified instead of parse_mode
+link_preview_options 	LinkPreviewOptions 	Optional 	Link preview generation options for the message
+disable_notification 	Boolean 	Optional 	Sends the message silently. Users will receive a notification with no sound.
+protect_content 	Boolean 	Optional 	Protects the contents of the sent message from forwarding and saving
+allow_paid_broadcast 	Boolean 	Optional 	Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance
+message_effect_id 	String 	Optional 	Unique identifier of the message effect to be added to the message; for private chats only
+reply_parameters 	ReplyParameters 	Optional 	Description of the message to reply to
+reply_markup 	InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply 	Optional 	Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user
+Formatting options
+
+The Bot API supports basic formatting for messages. You can use bold, italic, underlined, strikethrough, spoiler text, block quotations as well as inline links and pre-formatted code in your bots' messages. Telegram clients will render them accordingly. You can specify text entities directly, or use markdown-style or HTML-style formatting.
+
+Note that Telegram clients will display an alert to the user before opening an inline link ('Open this link?' together with the full URL).
+
+Message entities can be nested, providing following restrictions are met:
+- If two entities have common characters, then one of them is fully contained inside another.
+- bold, italic, underline, strikethrough, and spoiler entities can contain and can be part of any other entities, except pre and code.
+- blockquote and expandable_blockquote entities can't be nested.
+- All other entities can't contain each other.
+
+Links tg://user?id=<user_id> can be used to mention a user by their identifier without using a username. Please note:
+
+    These links will work only if they are used inside an inline link or in an inline keyboard button. For example, they will not work, when used in a message text.
+    Unless the user is a member of the chat where they were mentioned, these mentions are only guaranteed to work if the user has contacted the bot in private in the past or has sent a callback query to the bot via an inline button and doesn't have Forwarded Messages privacy enabled for the bot.
+
+You can find the list of programming and markup languages for which syntax highlighting is supported at libprisma#supported-languages.
+MarkdownV2 style
+
+To use this mode, pass MarkdownV2 in the parse_mode field. Use the following syntax in your message:
+
+*bold \*text*
+_italic \*text_
+__underline__
+~strikethrough~
+||spoiler||
+*bold _italic bold ~italic bold strikethrough ||italic bold strikethrough spoiler||~ __underline italic bold___ bold*
+[inline URL](http://www.example.com/)
+[inline mention of a user](tg://user?id=123456789)
+![👍](tg://emoji?id=5368324170671202286)
+`inline fixed-width code`
+```
+pre-formatted fixed-width code block
+```
+```python
+pre-formatted fixed-width code block written in the Python programming language
+```
+>Block quotation started
+>Block quotation continued
+>Block quotation continued
+>Block quotation continued
+>The last line of the block quotation
+**>The expandable block quotation started right after the previous block quotation
+>It is separated from the previous block quotation by an empty bold entity
+>Expandable block quotation continued
+>Hidden by default part of the expandable block quotation started
+>Expandable block quotation continued
+>The last line of the expandable block quotation with the expandability mark||
+
+Please note:
+
+    Any character with code between 1 and 126 inclusively can be escaped anywhere with a preceding '\' character, in which case it is treated as an ordinary character and not a part of the markup. This implies that '\' character usually must be escaped with a preceding '\' character.
+    Inside pre and code entities, all '`' and '\' characters must be escaped with a preceding '\' character.
+    Inside the (...) part of the inline link and custom emoji definition, all ')' and '\' must be escaped with a preceding '\' character.
+    In all other places characters '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!' must be escaped with the preceding character '\'.
+    In case of ambiguity between italic and underline entities __ is always greadily treated from left to right as beginning or end of an underline entity, so instead of ___italic underline___ use ___italic underline_**__, adding an empty bold entity as a separator.
+    A valid emoji must be provided as an alternative value for the custom emoji. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the emoji field of the custom emoji sticker.
+    Custom emoji entities can only be used by bots that purchased additional usernames on Fragment.
+
+HTML style
+
+To use this mode, pass HTML in the parse_mode field. The following tags are currently supported:
+
+<b>bold</b>, <strong>bold</strong>
+<i>italic</i>, <em>italic</em>
+<u>underline</u>, <ins>underline</ins>
+<s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>
+<span class="tg-spoiler">spoiler</span>, <tg-spoiler>spoiler</tg-spoiler>
+<b>bold <i>italic bold <s>italic bold strikethrough <span class="tg-spoiler">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>
+<a href="http://www.example.com/">inline URL</a>
+<a href="tg://user?id=123456789">inline mention of a user</a>
+<tg-emoji emoji-id="5368324170671202286">👍</tg-emoji>
+<code>inline fixed-width code</code>
+<pre>pre-formatted fixed-width code block</pre>
+<pre><code class="language-python">pre-formatted fixed-width code block written in the Python programming language</code></pre>
+<blockquote>Block quotation started\nBlock quotation continued\nThe last line of the block quotation</blockquote>
+<blockquote expandable>Expandable block quotation started\nExpandable block quotation continued\nExpandable block quotation continued\nHidden by default part of the block quotation started\nExpandable block quotation continued\nThe last line of the block quotation</blockquote>
+
+Please note:
+
+    Only the tags mentioned above are currently supported.
+    All <, > and & symbols that are not a part of a tag or an HTML entity must be replaced with the corresponding HTML entities (< with &lt;, > with &gt; and & with &amp;).
+    All numerical HTML entities are supported.
+    The API currently supports only the following named HTML entities: &lt;, &gt;, &amp; and &quot;.
+    Use nested pre and code tags, to define programming language for pre entity.
+    Programming language can't be specified for standalone code tags.
+    A valid emoji must be used as the content of the tg-emoji tag. The emoji will be shown instead of the custom emoji in places where a custom emoji cannot be displayed (e.g., system notifications) or if the message is forwarded by a non-premium user. It is recommended to use the emoji from the emoji field of the custom emoji sticker.
+    Custom emoji entities can only be used by bots that purchased additional usernames on Fragment.
+
+Markdown style
+
+This is a legacy mode, retained for backward compatibility. To use this mode, pass Markdown in the parse_mode field. Use the following syntax in your message:
+
+*bold text*
+_italic text_
+[inline URL](http://www.example.com/)
+[inline mention of a user](tg://user?id=123456789)
+`inline fixed-width code`
+```
+pre-formatted fixed-width code block
+```
+```python
+pre-formatted fixed-width code block written in the Python programming language
+```
+
+Please note:
+
+    Entities must not be nested, use parse mode MarkdownV2 instead.
+    There is no way to specify “underline”, “strikethrough”, “spoiler”, “blockquote”, “expandable_blockquote” and “custom_emoji” entities, use parse mode MarkdownV2 instead.
+    To escape characters '_', '*', '`', '[' outside of an entity, prepend the characters '\' before them.
+    Escaping inside entities is not allowed, so entity must be closed first and reopened again: use _snake_\__case_ for italic snake_case and *2*\**2=4* for bold 2*2=4.
+
+Paid Broadcasts
+
+By default, all bots are able to broadcast up to 30 messages per second to their users. Developers can increase this limit by enabling Paid Broadcasts in @Botfather - allowing their bot to broadcast up to 1000 messages per second.
+
+Each message broadcasted over the free amount of 30 messages per second incurs a cost of 0.1 Stars per message, paid with Telegram Stars from the bot's balance. In order to use this feature, a bot must have at least 10,000 Stars on its balance.
+
+    Bots with increased limits are only charged for messages that are broadcasted successfully.
+
+forwardMessage
+
+Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned.
+Parameter 	Type 	Required 	Description
+chat_id 	Integer or String 	Yes 	Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+message_thread_id 	Integer 	Optional 	Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+from_chat_id 	Integer or String 	Yes 	Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+video_start_timestamp 	Integer 	Optional 	New start timestamp for the forwarded video in the message
+disable_notification 	Boolean 	Optional 	Sends the message silently. Users will receive a notification with no sound.
+protect_content 	Boolean 	Optional 	Protects the contents of the forwarded message from forwarding and saving
+message_id 	Integer 	Yes 	Message identifier in the chat specified in from_chat_id
+forwardMessages
+
+Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned.
+Parameter 	Type 	Required 	Description
+chat_id 	Integer or String 	Yes 	Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+message_thread_id 	Integer 	Optional 	Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+from_chat_id 	Integer or String 	Yes 	Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)
+message_ids 	Array of Integer 	Yes 	A JSON-serialized list of 1-100 identifiers of messages in the chat from_chat_id to forward. The identifiers must be specified in a strictly increasing order.
+disable_notification 	Boolean 	Optional 	Sends the messages silently. Users will receive a notification with no sound.
+protect_content 	Boolean 	Optional 	Protects the contents of the forwarded messages from forwarding and saving
+copyMessage
+
+Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.
+Parameter 	Type 	Required 	Description
+chat_id 	Integer or String 	Yes 	Unique identifier for the target chat or username of the target channel (in the format @channelusername)
+message_thread_id 	Integer 	Optional 	Unique identifier for the target message thread (topic) of the forum; for forum supergroups only
+from_chat_id 	Integer or String 	Yes 	Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)
+message_id 	Integer 	Yes 	Message identifier in the chat specified in from_chat_id
+video_start_timestamp 	Integer 	Optional 	New start timestamp for the copied video in the message
+caption 	String 	Optional 	New caption for media, 0-1024 characters after entities parsing. If not specified, the original caption is kept
+parse_mode 	String 	Optional 	Mode for parsing entities in the new caption. See formatting options for more details.
+caption_entities 	Array of MessageEntity 	Optional 	A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of parse_mode
+show_caption_above_media 	Boolean 	Optional 	Pass True, if the caption must be shown above the message media. Ignored if a new caption isn't specified.
+disable_notification 	Boolean 	Optional 	Sends the message silently. Users will receive a notification with no sound.
+protect_content 	Boolean 	Optional 	Protects the contents of the sent message from forwarding and saving
+allow_paid_broadcast 	Boolean 	Optional 	Pass True to allow up to 1000 messages per second, ignoring broadcasting limits for a fee of 0.1 Telegram Stars per message. The relevant Stars will be withdrawn from the bot's balance
+reply_parameters 	ReplyParameters 	Optional 	Description of the message to reply to
+reply_markup 	InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply 	Optional 	Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user
